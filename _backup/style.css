@@ -1,0 +1,559 @@
+/* --- 1. RESET & VARIABLES --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+:root {
+  --bg-color: #080808; /* Ultra Dark */
+  --text-color: #ffffff;
+  --accent-color: #00ff62; /* Neon Green */
+  --gray-text: #a1a1a6;
+  --panel-width: 100vw;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- 2. LENIS SMOOTH SCROLL (WAJIB) --- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* --- 3. NAVBAR --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 30px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2000;
+  background: linear-gradient(to bottom, rgba(8, 8, 8, 0.9), rgba(8, 8, 8, 0));
+  backdrop-filter: blur(5px);
+}
+
+.nav-logo {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 40px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+  color: var(--accent-color);
+}
+
+.btn-filled {
+  text-decoration: none;
+  background: var(--text-color);
+  color: var(--bg-color);
+  padding: 12px 30px;
+  border-radius: 100px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-filled:hover {
+  background: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 255, 98, 0.2);
+}
+
+/* --- 4. HERO SECTION --- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8%;
+  position: relative;
+  padding-top: 100px;
+}
+
+.hero-title {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.9;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: 50px;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+}
+.line-flex {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* Status Pill (Pengganti Kotak Miring) */
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  backdrop-filter: blur(10px);
+  margin-left: 20px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--accent-color);
+  animation: dotPulse 2s infinite;
+}
+
+@keyframes dotPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.status-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Hero Info Box */
+.hero-info-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 40px;
+  margin-top: 20px;
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  color: var(--accent-color);
+  max-width: 500px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.scroll-badge {
+  font-family: monospace;
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  color: var(--gray-text);
+}
+
+/* --- 5. BRANDS MARQUEE --- */
+.brands {
+  padding: 100px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  background: var(--bg-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand-track {
+  display: flex;
+  gap: 120px;
+  width: fit-content;
+  animation: scrollMarquee 30s linear infinite;
+}
+
+.brand-track span {
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03); /* Sangat tipis agar tidak mengganggu */
+  white-space: nowrap;
+}
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* --- 6. HORIZONTAL SECTION (PREMIUM PANELS) --- */
+.horizontal-section {
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+.horizontal-wrapper {
+  display: flex;
+  width: 500vw;
+}
+
+.panel {
+  width: var(--panel-width);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8%;
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.panel-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Dynamic SVG Icons Container */
+.panel-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dynamic-icon {
+  width: 280px;
+  height: 280px;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 98, 0.15));
+}
+
+.dynamic-icon svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Text Styles */
+.panel-text h3 {
+  color: var(--accent-color);
+  font-size: 0.9rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* FIX: Judul Sejajar & Tidak Bertumpuk */
+.inline-title {
+  font-size: clamp(4rem, 7vw, 8rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  white-space: nowrap; /* KUNCI: Mencegah turun baris */
+  display: flex;
+  align-items: center;
+}
+
+.rotate-letter {
+  display: inline-block;
+  color: var(--accent-color);
+  margin: 0 2px;
+}
+
+.panel-text p {
+  font-size: 1.3rem;
+  color: var(--gray-text);
+  max-width: 550px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Animasi Khusus SVG */
+.pulse-ring {
+  transform-origin: center;
+  animation: ringPulse 2.5s infinite;
+}
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+    stroke-width: 2px;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+    stroke-width: 0px;
+  }
+}
+
+/* --- 7. VERTICAL STORY (NEON PATH) --- */
+.vertical-story {
+  position: relative;
+  padding: 200px 0;
+}
+
+.svg-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.svg-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Efek Neon Glow pada Garis */
+#path {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 98, 0.7));
+}
+
+.story-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.story-row {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  margin-bottom: 350px; /* Jarak antar cerita */
+}
+
+.story-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.story-img {
+  flex: 1;
+  height: 550px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.story-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1); /* Untuk parallax */
+}
+
+.story-text {
+  flex: 1;
+}
+
+.story-text h2 {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 25px;
+  line-height: 1.1;
+}
+
+.story-text p {
+  font-size: 1.25rem;
+  color: var(--gray-text);
+  line-height: 1.6;
+}
+
+/* --- 8. SERVICES GRID --- */
+.services-intro {
+  text-align: center;
+  padding: 100px 0 150px;
+}
+
+.services-intro h2 {
+  font-size: 3.5rem;
+  margin-bottom: 80px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.s-card {
+  background: linear-gradient(145deg, #111, #0a0a0a);
+  padding: 70px 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.4s;
+  cursor: default;
+}
+
+.s-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.s-card h3 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* --- 9. FOOTER --- */
+.footer {
+  padding: 150px 10% 50px;
+  background: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-wrap {
+  text-align: center;
+  padding-bottom: 100px;
+}
+
+.footer h2 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 60px;
+}
+
+.big-mail {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.big-mail:hover {
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* Social Icons SVG Style */
+.social-icons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.icon-link {
+  color: var(--gray-text);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.icon-link:hover {
+  color: #000;
+  background: var(--accent-color);
+  transform: translateY(-5px) scale(1.1);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #555;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.socials span {
+  margin-left: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.socials span:hover {
+  color: var(--text-color);
+}
+
+/* --- 10. RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .panel-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
+  }
+  .panel-visual {
+    margin-bottom: 20px;
+  }
+  .inline-title {
+    justify-content: center;
+  }
+  .story-row {
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 200px;
+  }
+  .story-row.reverse {
+    flex-direction: column;
+  }
+  .story-img {
+    width: 100%;
+    height: 400px;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
